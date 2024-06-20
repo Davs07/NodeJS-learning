@@ -9,14 +9,130 @@ const User = Schema("User", {
   _id: { type: String, required: true },
   username: { type: String, required: true },
   password: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
+  /*  createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   role: {
     type: String,
     enum: ["admin", "empresa", "camdidato"],
     default: "candidato",
+  }, */
+});
+
+const DataCandidato = Schema("candidatoData", {
+  _id: {
+    type: String,
+    required: true,
+  },
+  userId: {
+    type: String,
+  },
+  name: {
+    type: String,
+  },
+  surname: {
+    type: String,
+  },
+  dni: {
+    type: String,
+  },
+  email: {
+    type: String,
+  },
+  jobLocation: {
+    type: String,
+  },
+  jobMode: {
+    type: String,
+  },
+  jobSchedule: {
+    type: String,
+  },
+  education: {
+    type: String,
+  },
+  experience: {
+    type: String,
+  },
+  skills: {
+    type: Array,
+  },
+  interests: {
+    type: String,
+  },
+  desiredSalary: {
+    type: Number,
   },
 });
+
+export class CandidatoDataRepository {
+  static async create({
+    name,
+    userId,
+    surname,
+    dni,
+    email,
+    jobLocation,
+    jobMode,
+    jobSchedule,
+    education,
+    experience,
+    skills,
+    interests,
+    desiredSalary,
+  }) {
+    const id = crypto.randomUUID();
+    const candidato = DataCandidato.create({
+      _id: id,
+      userId,
+      name,
+      surname,
+      dni,
+      email,
+      jobLocation,
+      jobMode,
+      jobSchedule,
+      education,
+      experience,
+      skills,
+      interests,
+      desiredSalary,
+    });
+    return candidato;
+  }
+  static async update({
+    _id,
+    name,
+    surname,
+    dni,
+    email,
+    jobLocation,
+    jobMode,
+    jobSchedule,
+    education,
+    experience,
+    skills,
+    interests,
+    desiredSalary,
+  }) {
+    const candidato = DataCandidato.findOne({ _id });
+    if (!candidato) throw new Error("invalid username");
+    candidato.name = name;
+    candidato.surname = surname;
+    candidato.dni = dni;
+    candidato.email = email;
+    candidato.jobLocation = jobLocation;
+    candidato.jobMode = jobMode;
+    candidato.jobSchedule = jobSchedule;
+    candidato.education = education;
+    candidato.experience = experience;
+    candidato.skills = skills;
+    candidato.interests = interests;
+    candidato.desiredSalary = desiredSalary;
+    candidato.save();
+    return candidato;
+  }
+}
+
 export class UserRepository {
   static async create({ username, password }) {
     // 1. Validaciones de Username y Password (opcional: usar Zod
@@ -46,7 +162,7 @@ export class UserRepository {
     Validation.username(username);
     Validation.password(password);
 
-    // 2. Validación de Usuario
+    // 2. Validación de Usuario q
     const user = User.findOne({ username });
     if (!user) throw new Error("invalid username");
 

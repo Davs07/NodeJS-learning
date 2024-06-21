@@ -18,52 +18,6 @@ const User = Schema("User", {
   }, */
 });
 
-const DataCandidato = Schema("CandidatoData", {
-  _id: {
-    type: String,
-    required: true,
-  },
-  userId: {
-    type: String,
-  },
-  name: {
-    type: String,
-  },
-  surname: {
-    type: String,
-  },
-  dni: {
-    type: String,
-  },
-  email: {
-    type: String,
-  },
-  jobLocation: {
-    type: String,
-  },
-  jobMode: {
-    type: String,
-  },
-  jobSchedule: {
-    type: String,
-  },
-  education: {
-    type: String,
-  },
-  experience: {
-    type: String,
-  },
-  skills: {
-    type: Array,
-  },
-  interests: {
-    type: String,
-  },
-  desiredSalary: {
-    type: Number,
-  },
-});
-
 
 
 export class UserRepository {

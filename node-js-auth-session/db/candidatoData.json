@@ -1,1 +1,27 @@
-[]
+[
+    {
+        "_id": "a9b5145f-1409-4632-9b24-6d25cae1c0bf",
+        "name": "Davs",
+        "surname": "Rodríguez",
+        "dni": "74949756",
+        "jobLocation": "Cajamarca",
+        "jobMode": "presencial",
+        "jobSchedule": "full-time",
+        "education": "edu-sec",
+        "experience": "1",
+        "skills": [],
+        "interests": "Todo",
+        "desiredSalary": 3000
+    },
+    {
+        "_id": "153e9fbc-1fc7-430f-a223-fb1eae9465cd",
+        "name": "davs",
+        "dni": "74949756",
+        "jobLocation": "Cajamarca",
+        "jobMode": "presencial",
+        "jobSchedule": "full-time",
+        "education": "edu-sec",
+        "experience": "2",
+        "desiredSalary": 1200
+    }
+]

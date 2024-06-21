@@ -18,7 +18,7 @@ const User = Schema("User", {
   }, */
 });
 
-const DataCandidato = Schema("candidatoData", {
+const DataCandidato = Schema("CandidatoData", {
   _id: {
     type: String,
     required: true,
@@ -64,74 +64,7 @@ const DataCandidato = Schema("candidatoData", {
   },
 });
 
-export class CandidatoDataRepository {
-  static async create({
-    name,
-    userId,
-    surname,
-    dni,
-    email,
-    jobLocation,
-    jobMode,
-    jobSchedule,
-    education,
-    experience,
-    skills,
-    interests,
-    desiredSalary,
-  }) {
-    const id = crypto.randomUUID();
-    const candidato = DataCandidato.create({
-      _id: id,
-      userId,
-      name,
-      surname,
-      dni,
-      email,
-      jobLocation,
-      jobMode,
-      jobSchedule,
-      education,
-      experience,
-      skills,
-      interests,
-      desiredSalary,
-    });
-    return candidato;
-  }
-  static async update({
-    _id,
-    name,
-    surname,
-    dni,
-    email,
-    jobLocation,
-    jobMode,
-    jobSchedule,
-    education,
-    experience,
-    skills,
-    interests,
-    desiredSalary,
-  }) {
-    const candidato = DataCandidato.findOne({ _id });
-    if (!candidato) throw new Error("invalid username");
-    candidato.name = name;
-    candidato.surname = surname;
-    candidato.dni = dni;
-    candidato.email = email;
-    candidato.jobLocation = jobLocation;
-    candidato.jobMode = jobMode;
-    candidato.jobSchedule = jobSchedule;
-    candidato.education = education;
-    candidato.experience = experience;
-    candidato.skills = skills;
-    candidato.interests = interests;
-    candidato.desiredSalary = desiredSalary;
-    candidato.save();
-    return candidato;
-  }
-}
+
 
 export class UserRepository {
   static async create({ username, password }) {

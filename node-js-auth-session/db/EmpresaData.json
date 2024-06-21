@@ -1,0 +1,38 @@
+[
+    {
+        "_id": "9d1ac6ef-80e0-4a7d-a985-e2a5fc2e088a",
+        "companyName": "empresa",
+        "companyRuc": "",
+        "companyAddress": "",
+        "companyEmail": "",
+        "companyPhone": "",
+        "companyDescription": "",
+        "companyWebsite": "",
+        "companySize": "12",
+        "companyIndustry": "Tecnológica"
+    },
+    {
+        "_id": "e78ec3d2-9cd0-4f49-ba96-0f7be914b6cf",
+        "companyName": "xd",
+        "companyRuc": "",
+        "companyAddress": "",
+        "companyEmail": "",
+        "companyPhone": "",
+        "companyDescription": "",
+        "companyWebsite": "",
+        "companySize": "",
+        "companyIndustry": "Tecnológica"
+    },
+    {
+        "_id": "c75ef02f-bbc2-4db8-bcb2-6c9b6cd3d919",
+        "companyName": "Furros del Marciano",
+        "companyRuc": "123",
+        "companyAddress": "Jr. San Furros",
+        "companyEmail": "furros@gmai",
+        "companyPhone": "123456789",
+        "companyDescription": "furros del marciano",
+        "companyWebsite": "furros.com",
+        "companySize": "3",
+        "companyIndustry": "furrería"
+    }
+]

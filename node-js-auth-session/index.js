@@ -1,15 +1,16 @@
 import express from "express";
 import { ALLOWED_ORIGINS, PORT, SECRET_JWT_KEY } from "./config.js";
-import { UserRepository, CandidatoDataRepository } from "./user-repository.js";
+import { UserRepository } from "./user-repository.js";
+import { CandidatoDataRepository } from "./candidato-repository.js";
+import { EmpresaDataRepository } from "./empresa-repository.js";
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
 import cors from "cors";
 
 const app = express();
-app.use(express.json());
 
 // Configuración de CORS
-app.use(
+/* app.use(
   cors({
     origin: (origin, callback) => {
       // allow requests with no origin (like mobile apps or curl requests)
@@ -22,6 +23,16 @@ app.use(
     },
     credentials: true, // This is needed if you want to allow cookies to be sent with requests
   })
+); */
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "http://localhost:3002",
+    ],
+    credentials: true,
+  })
 );
 
 app.use(express.json());
@@ -29,7 +40,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Middleware (Para verificar el token y establecer la sesión del usuario)
-app.use((req, res, next) => {
+/* app.use((req, res, next) => {
   const token = req.cookies.access_token;
 
   req.session = { user: null };
@@ -37,12 +48,13 @@ app.use((req, res, next) => {
   try {
     const data = jwt.verify(token, SECRET_JWT_KEY);
     req.session.user = data;
+    res.status(400).json({ Xd: "Xd" });
   } catch (error) {
-    console.log(error);
+    console.log("Token verification error:", error);
   }
 
   next();
-});
+}); */
 
 app.get("/", (req, res) => {
   const { user } = req.session;
@@ -84,7 +96,7 @@ app.post("/login", async (req, res) => {
       .status(200)
       .json({ user });
   } catch (error) {
-    res.status(401).json(error.message);
+    res.status(500).json({ error: "Error logging in" });
   }
 });
 app.post("/register", async (req, res) => {
@@ -95,7 +107,7 @@ app.post("/register", async (req, res) => {
     const id = await UserRepository.create({ username, password });
     res.status(201).json({ id });
   } catch (error) {
-    res.status(400).json(error.message);
+    res.status(500).json({ error: "Error creating user" });
   }
 });
 app.post("/logout", (req, res) => {
@@ -111,15 +123,23 @@ app.get("/app", (req, res) => {
 
 // Candidato Datos
 
-app.post("/candidato", async (req, res) => {
+app.get("/user", async (req, res) => {
   const { user } = req.session;
   if (!user) return res.status(403).json("Access not authorized");
+});
+
+app.post("/candidato", async (req, res) => {
+  /*  const { user } = req.session;
+  if (!user) return res.status(403).json("Access not authorized"); */
 
   const data = req.body;
+  console.log(data);
 
   try {
-    const candidato = await CandidatoDataRepository.create(data);
-    console.log(candidato);
+    const candidato = await CandidatoDataRepository.create({
+      ...data,
+    });
+    console.log("candidato", candidato);
     res.status(201).json(candidato);
   } catch (error) {
     res.json(error.message);
@@ -127,6 +147,33 @@ app.post("/candidato", async (req, res) => {
   console.log(req.body);
   /* res.json(req.body); */
 });
+
+app.post("/empresa", async (req, res) => {
+  const data = req.body;
+
+  try {
+    const empresa = await EmpresaDataRepository.create({
+      ...data,
+    });
+    res.status(201).json(empresa);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+
+// Ruta para hacer match
+app.post('/api/match', async (req, res) => {
+  try {
+    const response = await axios.post('http://localhost:8000/match', req.body);
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error al hacer match:', error.response ? error.response.data : error.message);
+    res.status(500).json({ error: 'Error al procesar la solicitud de match' });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
